@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <title>Pig head🐷</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    h1 {
+      margin-top: 10px;
+      font-size: 2rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 20px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    input, button {
+      font-size: 1rem;
+      border: none;
+      outline: none;
+      border-radius: 10px;
+      padding: 10px 15px;
+    }
+    button {
+      background-color: #ff4fa3;
+      color: white;
+      margin: 5px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #ff2c8b;
+      transform: scale(1.05);
+    }
+    .player-list {
+      margin: 10px 0;
+      text-align: left;
+    }
+    .player {
+      display: flex;
+      justify-content: space-between;
+      margin: 4px 0;
+      font-weight: bold;
+    }
+    .active {
+      color: #fff;
+      text-shadow: 0 0 5px #fff;
+    }
+    .winner {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+      background: rgba(255,255,255,0.2);
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    footer {
+      margin-top: auto;
+      padding: 10px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      text-align: center;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 1.5rem; }
+      .container { padding: 15px; }
+      button { padding: 8px 10px; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Pig head🐷</h1>
+  <div class="container">
+    <div id="setup">
+      <input type="text" id="playerName" placeholder="Nome do jogador" />
+      <button onclick="addPlayer()">Adicionar</button>
+      <div class="player-list" id="playerList"></div>
+      <button onclick="startGame()" id="startBtn">Iniciar Jogo</button>
+    </div>
+
+    <div id="game" style="display:none;">
+      <h2 id="turnInfo"></h2>
+      <p>Pontos da rodada: <span id="roundScore">0</span></p>
+      <div>
+        <button onclick="addPoints(1)">+1</button>
+        <button onclick="addPoints(5)">+5</button>
+        <button onclick="addPoints(10)">+10</button>
+        <button onclick="addPoints(20)">+20</button>
+      </div>
+      <div>
+        <button onclick="hold()">✋ Parar</button>
+        <button onclick="resetRound()">🔥 Zerar rodada</button>
+        <button onclick="resetGame()">💣 Zerar tudo</button>
+      </div>
+      <div class="player-list" id="scoreboard"></div>
+      <div class="winner" id="winnerMsg"></div>
+    </div>
+  </div>
+
+  <footer>
+    Desenvolvido por <a href="https://www.linkedin.com/in/wallace-barbosa-1a7488328/" target="_blank">Barbosasw</a>
+  </footer>
+
+  <script>
+    let players = [];
+    let currentPlayer = 0;
+    let roundScore = 0;
+    let gameActive = false;
+
+    function addPlayer() {
+      const nameInput = document.getElementById("playerName");
+      const name = nameInput.value.trim();
+      if (name) {
+        players.push({ name, total: 0 });
+        nameInput.value = "";
+        renderPlayerList();
+      }
+    }
+
+    function renderPlayerList() {
+      const list = document.getElementById("playerList");
+      list.innerHTML = players.map((p, i) => `${i+1}. ${p.name}`).join("<br>");
+    }
+
+    function startGame() {
+      if (players.length < 2) {
+        alert("Adicione pelo menos 2 jogadores!");
+        return;
+      }
+      gameActive = true;
+      document.getElementById("setup").style.display = "none";
+      document.getElementById("game").style.display = "block";
+      updateUI();
+    }
+
+    function addPoints(points) {
+      if (!gameActive) return;
+      roundScore += points;
+      updateUI();
+    }
+
+    function hold() {
+      if (!gameActive) return;
+      players[currentPlayer].total += roundScore;
+      if (players[currentPlayer].total >= 100) {
+        document.getElementById("winnerMsg").textContent =
+          `${players[currentPlayer].name} venceu com ${players[currentPlayer].total} pontos! 🎉`;
+        gameActive = false;
+      } else {
+        roundScore = 0;
+        nextPlayer();
+      }
+      updateUI();
+    }
+
+    function resetRound() {
+      roundScore = 0;
+      nextPlayer();
+      updateUI();
+    }
+
+    function resetGame() {
+      if (confirm("Tem certeza que deseja zerar tudo?")) {
+        players.forEach(p => p.total = 0);
+        roundScore = 0;
+        currentPlayer = 0;
+        gameActive = true;
+        document.getElementById("winnerMsg").textContent = "";
+        updateUI();
+      }
+    }
+
+    function nextPlayer() {
+      currentPlayer = (currentPlayer + 1) % players.length;
+      roundScore = 0;
+    }
+
+    function updateUI() {
+      const turnInfo = document.getElementById("turnInfo");
+      const roundDisplay = document.getElementById("roundScore");
+      const scoreboard = document.getElementById("scoreboard");
+
+      turnInfo.textContent = `Vez de: ${players[currentPlayer].name}`;
+      roundDisplay.textContent = roundScore;
+
+      scoreboard.innerHTML = players
+        .map((p, i) => `
+          <div class="player ${i === currentPlayer ? 'active' : ''}">
+            <span>${p.name}</span>
+            <span>${p.total}</span>
+          </div>
+        `)
+        .join("");
+    }
+  </script>
+</body>
+</html>
