@@ -115,9 +115,10 @@
         <button onclick="addPoints(20)">+20</button>
       </div>
       <div>
-        <button onclick="hold()">✋ Parar</button>
-        <button onclick="resetRound()">🔥 Zerar rodada</button>
-        <button onclick="resetGame()">💣 Zerar tudo</button>
+        <button onclick="hold()">Parar</button>
+        <button onclick="resetRound()">Zerar rodada</button>
+        <button onclick="resetCurrentPlayer()">Zerar jogador</button>
+        <button onclick="resetGame()">Reniciar Jogo</button>
       </div>
       <div class="player-list" id="scoreboard"></div>
       <div class="winner" id="winnerMsg"></div>
@@ -184,6 +185,14 @@
       roundScore = 0;
       nextPlayer();
       updateUI();
+    }
+
+    function resetCurrentPlayer() {
+      if (confirm(`Deseja zerar os pontos de ${players[currentPlayer].name}?`)) {
+        players[currentPlayer].total = 0;
+        roundScore = 0;
+        updateUI();
+      }
     }
 
     function resetGame() {
