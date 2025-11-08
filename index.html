@@ -33,7 +33,7 @@
       border-radius: 20px;
       padding: 20px;
       width: 100%;
-      max-width: 420px;
+      max-width: 440px;
       text-align: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
@@ -78,6 +78,7 @@
       border-radius: 10px;
       margin-top: 10px;
     }
+
     footer {
       margin-top: auto;
       padding: 10px;
@@ -93,6 +94,36 @@
     footer a:hover {
       text-decoration: underline;
     }
+
+    /* Instruções */
+    #instructions {
+      display: none;
+      background: rgba(255,255,255,0.2);
+      border-radius: 15px;
+      padding: 15px;
+      margin-top: 15px;
+      text-align: left;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      animation: fadeIn 0.4s ease;
+    }
+    #instructions h3 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    #instructions img {
+      display: block;
+      margin: 8px auto;
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(255,255,255,0.6);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 480px) {
       h1 { font-size: 1.5rem; }
       .container { padding: 15px; }
@@ -108,6 +139,28 @@
       <button onclick="addPlayer()">Adicionar</button>
       <div class="player-list" id="playerList"></div>
       <button onclick="startGame()" id="startBtn">Iniciar Jogo</button>
+      <button onclick="toggleInstructions()">📘 Regras do Jogo</button>
+
+      <div id="instructions">
+        <h3>📘 Regras Oficiais do Jogo Pig</h3>
+        <p><strong>Objetivo:</strong> Ser o primeiro jogador a alcançar <b>100 pontos</b>.</p>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Pig_Dice_1.png" alt="Porco - dado 1">
+        <p><strong>🐷 O perigo:</strong> Se você tirar um <b>porco (1)</b>, perde todos os pontos da rodada!</p>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Pig_Dice_5.png" alt="Porco feliz - dado 5">
+        <p><strong>🎲 Como jogar:</strong></p>
+        <ul>
+          <li>Os jogadores se revezam em turnos.</li>
+          <li>Durante sua vez, você pode continuar jogando e somando pontos.</li>
+          <li>Mas se sair o “porco azarado” (1), você perde os pontos da rodada.</li>
+          <li>Se preferir, você pode clicar em <b>“Parar”</b> para guardar sua pontuação e passar a vez.</li>
+          <li>O primeiro a chegar a 100 pontos vence o jogo!</li>
+        </ul>
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Pig_Dice_6.png" alt="Porco feliz - dado 6">
+        <p><strong>Dica:</strong> Saber quando parar é o segredo da vitória! 🐖</p>
+      </div>
     </div>
 
     <div id="game" style="display:none;">
@@ -125,6 +178,7 @@
         <button onclick="resetPlayerPoints()">Zerar jogador</button>
         <button onclick="resetGame()">Zerar tudo</button>
         <button onclick="restartGame()">Reiniciar jogo</button>
+        <button onclick="toggleInstructions()">📘 Ver regras</button>
       </div>
       <div class="player-list" id="scoreboard"></div>
       <div class="winner" id="winnerMsg"></div>
@@ -294,6 +348,11 @@
         .join("");
 
       saveGame();
+    }
+
+    function toggleInstructions() {
+      const instr = document.getElementById("instructions");
+      instr.style.display = instr.style.display === "none" ? "block" : "none";
     }
   </script>
 </body>
