@@ -6,7 +6,6 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Pig Head 🐷</title>
 
-  <!-- Notiflix -->
   <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-aio-3.2.6.min.js"></script>
 
   <style>
@@ -178,13 +177,13 @@
         <li>O primeiro a chegar a 100 pontos vence!</li>
       </ul>
       <p><strong>Dica:</strong> É um jogo de sorte e estratégia.</p>
-      <button onclick="toggleScoreTable()">📊 Ver pontuação oficial</button>
+      <button onclick="toggleScoreTable()">Ver pontuação</button>
 
       <div id="scoreTable">
         <h3>Tabela Oficial de Pontuação</h3>
         <table>
           <tr><th>Posição dos Porcos</th><th>Pontuação</th></tr>
-          <tr><td>Pig Out (porcos tocam o mesmo lado)</td><td>0 (perde os pontos da rodada)</td></tr>
+          <tr><td>Pig Out (porcos se tocam)</td><td>0 (perde os pontos da rodada)</td></tr>
           <tr><td>Sider (porcos em lados diferentes)</td><td>0</td></tr>
           <tr><td>Razorback (porco de costas)</td><td>5</td></tr>
           <tr><td>Trotter (porco em pé nas patas)</td><td>5</td></tr>
