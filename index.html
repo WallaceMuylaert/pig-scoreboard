@@ -94,8 +94,7 @@
       text-decoration: underline;
     }
 
-    /* Instruções */
-    #instructions {
+    #instructions, #scoreTable {
       display: none;
       background: rgba(255,255,255,0.2);
       border-radius: 15px;
@@ -106,13 +105,29 @@
       line-height: 1.5;
       animation: fadeIn 0.4s ease;
     }
-    #instructions h3 {
+    #instructions h3, #scoreTable h3 {
       text-align: center;
       margin-bottom: 10px;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      text-align: left;
+    }
+    th {
+      background: rgba(255,255,255,0.3);
     }
 
     @media (max-width: 480px) {
@@ -123,7 +138,7 @@
   </style>
 </head>
 <body>
-  <h1>🐷 Pig Head</h1>
+  <h1>Pig Head 🐷</h1>
   <div class="container">
     <div id="setup">
       <input type="text" id="playerName" placeholder="Nome do jogador" />
@@ -152,19 +167,36 @@
       <div class="winner" id="winnerMsg"></div>
     </div>
 
-    <!-- Regras agora estão fora do #setup -->
     <button onclick="toggleInstructions()">📘 Ver regras</button>
     <div id="instructions">
-      <h3>📘 Regras Oficiais do Jogo Pig</h3>
+      <h3>Regras Oficiais do Jogo Pig</h3>
       <p><strong>Objetivo:</strong> Ser o primeiro jogador a alcançar <b>100 pontos</b>.</p>
-      <p><strong>Como jogar:</strong></p>
       <ul>
         <li>Os jogadores se revezam em turnos.</li>
-        <li>Em cada turno, o jogador pode continuar jogando e somando pontos ou “parar” para guardar sua pontuação.</li>
-        <li>Se ele “parar”, os pontos da rodada são somados ao total.</li>
-        <li>O primeiro a alcançar 100 pontos vence!</li>
+        <li>Durante o turno, o jogador soma pontos ou pode “parar” para guardar o que ganhou.</li>
+        <li>Se ele parar, os pontos da rodada são adicionados ao total.</li>
+        <li>O primeiro a chegar a 100 pontos vence!</li>
       </ul>
-      <p><strong>Dica:</strong> É um jogo de sorte e estratégia. 🐖</p>
+      <p><strong>Dica:</strong> É um jogo de sorte e estratégia.</p>
+      <button onclick="toggleScoreTable()">📊 Ver pontuação oficial</button>
+
+      <div id="scoreTable">
+        <h3>Tabela Oficial de Pontuação</h3>
+        <table>
+          <tr><th>Posição dos Porcos</th><th>Pontuação</th></tr>
+          <tr><td>Pig Out (porcos tocam o mesmo lado)</td><td>0 (perde os pontos da rodada)</td></tr>
+          <tr><td>Sider (porcos em lados diferentes)</td><td>0</td></tr>
+          <tr><td>Razorback (porco de costas)</td><td>5</td></tr>
+          <tr><td>Trotter (porco em pé nas patas)</td><td>5</td></tr>
+          <tr><td>Snouter (porco apoiado no focinho e orelhas)</td><td>10</td></tr>
+          <tr><td>Leaning Jowler (porco inclinado na bochecha)</td><td>15</td></tr>
+          <tr><td>Double Razorback</td><td>20</td></tr>
+          <tr><td>Double Trotter</td><td>20</td></tr>
+          <tr><td>Double Snouter</td><td>40</td></tr>
+          <tr><td>Double Leaning Jowler</td><td>60</td></tr>
+          <tr><td>Mixed Combo (combinações diferentes)</td><td>Soma das pontuações</td></tr>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -178,7 +210,6 @@
     let roundScore = 0;
     let gameActive = false;
 
-    // Carregar jogo salvo
     window.onload = () => {
       const saved = localStorage.getItem("pighead_game");
       if (saved) {
@@ -194,8 +225,7 @@
     };
 
     function saveGame() {
-      const data = { players, currentPlayer, roundScore, gameActive };
-      localStorage.setItem("pighead_game", JSON.stringify(data));
+      localStorage.setItem("pighead_game", JSON.stringify({ players, currentPlayer, roundScore, gameActive }));
     }
 
     function addPlayer() {
@@ -209,15 +239,11 @@
     }
 
     function renderPlayerList() {
-      const list = document.getElementById("playerList");
-      list.innerHTML = players.map((p, i) => `${i + 1}. ${p.name}`).join("<br>");
+      document.getElementById("playerList").innerHTML = players.map((p, i) => `${i + 1}. ${p.name}`).join("<br>");
     }
 
     function startGame() {
-      if (players.length < 2) {
-        Notiflix.Notify.failure("Adicione pelo menos 2 jogadores!");
-        return;
-      }
+      if (players.length < 2) return Notiflix.Notify.failure("Adicione pelo menos 2 jogadores!");
       gameActive = true;
       document.getElementById("setup").style.display = "none";
       document.getElementById("game").style.display = "block";
@@ -263,6 +289,7 @@
           players[currentPlayer].total = 0;
           roundScore = 0;
           Notiflix.Notify.warning(`${players[currentPlayer].name} teve seus pontos zerados`);
+          nextPlayer();
           updateUI();
         }
       );
@@ -300,7 +327,6 @@
           document.getElementById("game").style.display = "none";
           document.getElementById("setup").style.display = "block";
           document.getElementById("playerList").innerHTML = "";
-          document.getElementById("playerName").value = "";
           document.getElementById("winnerMsg").textContent = "";
           localStorage.removeItem("pighead_game");
           Notiflix.Notify.success("Jogo reiniciado");
@@ -314,28 +340,26 @@
     }
 
     function updateUI() {
-      const turnInfo = document.getElementById("turnInfo");
-      const roundDisplay = document.getElementById("roundScore");
-      const scoreboard = document.getElementById("scoreboard");
-
-      turnInfo.textContent = `Vez de: ${players[currentPlayer].name}`;
-      roundDisplay.textContent = roundScore;
-
-      scoreboard.innerHTML = players
+      document.getElementById("turnInfo").textContent = `Vez de: ${players[currentPlayer].name}`;
+      document.getElementById("roundScore").textContent = roundScore;
+      document.getElementById("scoreboard").innerHTML = players
         .map((p, i) => `
           <div class="player ${i === currentPlayer ? "active" : ""}">
             <span>${p.name}</span>
             <span>${p.total}</span>
           </div>
-        `)
-        .join("");
-
+        `).join("");
       saveGame();
     }
 
     function toggleInstructions() {
       const instr = document.getElementById("instructions");
       instr.style.display = instr.style.display === "none" ? "block" : "none";
+    }
+
+    function toggleScoreTable() {
+      const table = document.getElementById("scoreTable");
+      table.style.display = table.style.display === "none" ? "block" : "none";
     }
   </script>
 </body>
