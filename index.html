@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <title>Pig Head</title>
+  <title>Pig Head 🐷</title>
 
   <!-- Notiflix -->
   <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-aio-3.2.6.min.js"></script>
@@ -101,7 +101,7 @@
   </style>
 </head>
 <body>
-  <h1>Pig Head</h1>
+  <h1>🐷 Pig Head</h1>
   <div class="container">
     <div id="setup">
       <input type="text" id="playerName" placeholder="Nome do jogador" />
@@ -122,6 +122,7 @@
       <div>
         <button onclick="hold()">Parar</button>
         <button onclick="resetRound()">Zerar rodada</button>
+        <button onclick="resetPlayerPoints()">Zerar jogador</button>
         <button onclick="resetGame()">Zerar tudo</button>
         <button onclick="restartGame()">Reiniciar jogo</button>
       </div>
@@ -213,6 +214,21 @@
       nextPlayer();
       Notiflix.Notify.info("Rodada zerada");
       updateUI();
+    }
+
+    function resetPlayerPoints() {
+      Notiflix.Confirm.show(
+        "Zerar jogador",
+        `Deseja zerar os pontos de ${players[currentPlayer].name}?`,
+        "Sim",
+        "Cancelar",
+        () => {
+          players[currentPlayer].total = 0;
+          roundScore = 0;
+          Notiflix.Notify.warning(`${players[currentPlayer].name} teve seus pontos zerados`);
+          updateUI();
+        }
+      );
     }
 
     function resetGame() {
