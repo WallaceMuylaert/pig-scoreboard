@@ -130,20 +130,6 @@
       <button onclick="addPlayer()">Adicionar</button>
       <div class="player-list" id="playerList"></div>
       <button onclick="startGame()" id="startBtn">Iniciar Jogo</button>
-      <button onclick="toggleInstructions()">📘 Regras do Jogo</button>
-
-      <div id="instructions">
-        <h3>📘 Regras Oficiais do Jogo Pig</h3>
-        <p><strong>Objetivo:</strong> Ser o primeiro jogador a alcançar <b>100 pontos</b>.</p>
-        <p><strong>Como jogar:</strong></p>
-        <ul>
-          <li>Os jogadores se revezam em turnos.</li>
-          <li>Em cada turno, o jogador pode continuar jogando e somando pontos ou “parar” para guardar sua pontuação.</li>
-          <li>Se ele “parar”, os pontos da rodada são somados ao total.</li>
-          <li>O primeiro a alcançar 100 pontos vence!</li>
-        </ul>
-        <p><strong>Dica:</strong> É um jogo de sorte e estratégia. 🐖</p>
-      </div>
     </div>
 
     <div id="game" style="display:none;">
@@ -161,10 +147,24 @@
         <button onclick="resetPlayerPoints()">Zerar jogador</button>
         <button onclick="resetGame()">Zerar tudo</button>
         <button onclick="restartGame()">Reiniciar jogo</button>
-        <button onclick="toggleInstructions()">📘 Ver regras</button>
       </div>
       <div class="player-list" id="scoreboard"></div>
       <div class="winner" id="winnerMsg"></div>
+    </div>
+
+    <!-- Regras agora estão fora do #setup -->
+    <button onclick="toggleInstructions()">📘 Ver regras</button>
+    <div id="instructions">
+      <h3>📘 Regras Oficiais do Jogo Pig</h3>
+      <p><strong>Objetivo:</strong> Ser o primeiro jogador a alcançar <b>100 pontos</b>.</p>
+      <p><strong>Como jogar:</strong></p>
+      <ul>
+        <li>Os jogadores se revezam em turnos.</li>
+        <li>Em cada turno, o jogador pode continuar jogando e somando pontos ou “parar” para guardar sua pontuação.</li>
+        <li>Se ele “parar”, os pontos da rodada são somados ao total.</li>
+        <li>O primeiro a alcançar 100 pontos vence!</li>
+      </ul>
+      <p><strong>Dica:</strong> É um jogo de sorte e estratégia. 🐖</p>
     </div>
   </div>
 
