@@ -4,11 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <title>Pig head🐷</title>
+  <title>Pig Head</title>
 
-  <!-- 🔔 Notiflix -->
+  <!-- Notiflix -->
   <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-aio-3.2.6.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-3.2.6.min.css"/>
 
   <style>
     * { box-sizing: border-box; }
@@ -102,7 +101,7 @@
   </style>
 </head>
 <body>
-  <h1>Pig head🐷</h1>
+  <h1>Pig Head</h1>
   <div class="container">
     <div id="setup">
       <input type="text" id="playerName" placeholder="Nome do jogador" />
@@ -121,10 +120,10 @@
         <button onclick="addPoints(20)">+20</button>
       </div>
       <div>
-        <button onclick="hold()">✋ Parar</button>
-        <button onclick="resetRound()">🔥 Zerar rodada</button>
-        <button onclick="resetCurrentPlayer()">❌ Zerar jogador</button>
-        <button onclick="resetGame()">💣 Zerar tudo</button>
+        <button onclick="hold()">Parar</button>
+        <button onclick="resetRound()">Zerar rodada</button>
+        <button onclick="resetGame()">Zerar tudo</button>
+        <button onclick="restartGame()">Reiniciar jogo</button>
       </div>
       <div class="player-list" id="scoreboard"></div>
       <div class="winner" id="winnerMsg"></div>
@@ -141,38 +140,24 @@
     let roundScore = 0;
     let gameActive = false;
 
-    // 🔧 Configuração do Notiflix para combinar com o tema
-    Notiflix.Confirm.init({
-      titleColor: '#ff4fa3',
-      okButtonBackground: '#ff4fa3',
-      cancelButtonBackground: '#999',
-      borderRadius: '12px',
-      width: '280px',
-      messageColor: '#333',
-    });
-
-    // 🔄 Salvar estado no localStorage
-    function saveState() {
-      const state = { players, currentPlayer, roundScore, gameActive };
-      localStorage.setItem("pig_game_state", JSON.stringify(state));
-    }
-
-    // 🔁 Carregar estado salvo
-    function loadState() {
-      const saved = localStorage.getItem("pig_game_state");
+    // Carregar jogo salvo
+    window.onload = () => {
+      const saved = localStorage.getItem("pighead_game");
       if (saved) {
-        const state = JSON.parse(saved);
-        players = state.players || [];
-        currentPlayer = state.currentPlayer || 0;
-        roundScore = state.roundScore || 0;
-        gameActive = state.gameActive || false;
-
-        if (players.length > 0) {
-          document.getElementById("setup").style.display = "none";
-          document.getElementById("game").style.display = "block";
-          updateUI();
-        }
+        const data = JSON.parse(saved);
+        players = data.players;
+        currentPlayer = data.currentPlayer;
+        roundScore = data.roundScore;
+        gameActive = data.gameActive;
+        document.getElementById("setup").style.display = "none";
+        document.getElementById("game").style.display = "block";
+        updateUI();
       }
+    };
+
+    function saveGame() {
+      const data = { players, currentPlayer, roundScore, gameActive };
+      localStorage.setItem("pighead_game", JSON.stringify(data));
     }
 
     function addPlayer() {
@@ -182,13 +167,12 @@
         players.push({ name, total: 0 });
         nameInput.value = "";
         renderPlayerList();
-        saveState();
       }
     }
 
     function renderPlayerList() {
       const list = document.getElementById("playerList");
-      list.innerHTML = players.map((p, i) => `${i+1}. ${p.name}`).join("<br>");
+      list.innerHTML = players.map((p, i) => `${i + 1}. ${p.name}`).join("<br>");
     }
 
     function startGame() {
@@ -199,15 +183,14 @@
       gameActive = true;
       document.getElementById("setup").style.display = "none";
       document.getElementById("game").style.display = "block";
+      Notiflix.Notify.success("Jogo iniciado");
       updateUI();
-      saveState();
     }
 
     function addPoints(points) {
       if (!gameActive) return;
       roundScore += points;
       updateUI();
-      saveState();
     }
 
     function hold() {
@@ -215,56 +198,59 @@
       players[currentPlayer].total += roundScore;
       if (players[currentPlayer].total >= 100) {
         document.getElementById("winnerMsg").textContent =
-          `${players[currentPlayer].name} venceu com ${players[currentPlayer].total} pontos! 🎉`;
+          `${players[currentPlayer].name} venceu com ${players[currentPlayer].total} pontos!`;
         gameActive = false;
-        Notiflix.Report.success('🏆 Vitória!', `${players[currentPlayer].name} venceu o jogo!`, 'OK');
+        Notiflix.Report.success("Fim de jogo", "Temos um vencedor!", "Ok");
       } else {
         roundScore = 0;
         nextPlayer();
       }
       updateUI();
-      saveState();
     }
 
     function resetRound() {
       roundScore = 0;
       nextPlayer();
+      Notiflix.Notify.info("Rodada zerada");
       updateUI();
-      saveState();
-    }
-
-    function resetCurrentPlayer() {
-      const playerName = players[currentPlayer].name;
-      Notiflix.Confirm.show(
-        'Zerar Jogador',
-        `Deseja zerar os pontos de ${playerName}?`,
-        'Sim',
-        'Não',
-        () => {
-          players[currentPlayer].total = 0;
-          roundScore = 0;
-          updateUI();
-          saveState();
-          Notiflix.Notify.info(`${playerName} teve os pontos zerados.`);
-        }
-      );
     }
 
     function resetGame() {
       Notiflix.Confirm.show(
-        'Zerar Tudo',
-        'Tem certeza que deseja zerar todos os pontos?',
-        'Sim',
-        'Cancelar',
+        "Zerar tudo",
+        "Tem certeza que deseja zerar todos os pontos?",
+        "Sim",
+        "Cancelar",
         () => {
           players.forEach(p => p.total = 0);
           roundScore = 0;
           currentPlayer = 0;
           gameActive = true;
           document.getElementById("winnerMsg").textContent = "";
+          Notiflix.Notify.warning("Todos os pontos foram zerados");
           updateUI();
-          saveState();
-          Notiflix.Notify.success("Todos os pontos foram zerados!");
+        }
+      );
+    }
+
+    function restartGame() {
+      Notiflix.Confirm.show(
+        "Reiniciar jogo",
+        "Deseja começar um novo jogo do zero (inclui jogadores)?",
+        "Sim",
+        "Cancelar",
+        () => {
+          players = [];
+          currentPlayer = 0;
+          roundScore = 0;
+          gameActive = false;
+          document.getElementById("game").style.display = "none";
+          document.getElementById("setup").style.display = "block";
+          document.getElementById("playerList").innerHTML = "";
+          document.getElementById("playerName").value = "";
+          document.getElementById("winnerMsg").textContent = "";
+          localStorage.removeItem("pighead_game");
+          Notiflix.Notify.success("Jogo reiniciado");
         }
       );
     }
@@ -284,16 +270,15 @@
 
       scoreboard.innerHTML = players
         .map((p, i) => `
-          <div class="player ${i === currentPlayer ? 'active' : ''}">
+          <div class="player ${i === currentPlayer ? "active" : ""}">
             <span>${p.name}</span>
             <span>${p.total}</span>
           </div>
         `)
         .join("");
-    }
 
-    // 🧠 Ao carregar a página, tenta restaurar o jogo
-    window.addEventListener("load", loadState);
+      saveGame();
+    }
   </script>
 </body>
 </html>
