@@ -158,6 +158,12 @@
         <button onclick="addPoints(40)">+40</button>
         <button onclick="addPoints(60)">+60</button>
       </div>
+
+      <!-- BOTÃO NOVO DE WO -->
+      <div>
+        <button onclick="playerWO()">WO (remover jogador da rodada)</button>
+      </div>
+
       <div>
         <button onclick="hold()">Parar</button>
         <button onclick="resetRound()">Zerar rodada</button>
@@ -175,28 +181,26 @@
       <p><strong>Objetivo:</strong> Ser o primeiro jogador a alcançar <b>100 pontos</b>.</p>
       <ul>
         <li>Os jogadores se revezam em turnos.</li>
-        <li>Durante o turno, o jogador soma pontos ou pode “parar” para guardar o que ganhou.</li>
-        <li>Se ele parar, os pontos da rodada são adicionados ao total.</li>
-        <li>O primeiro a chegar a 100 pontos vence!</li>
+        <li>Durante o turno, o jogador soma pontos ou pode “parar”.</li>
+        <li>Se parar, os pontos da rodada são adicionados ao total.</li>
+        <li>O primeiro a chegar a 100 vence!</li>
       </ul>
-      <p><strong>Dica:</strong> É um jogo de sorte e estratégia.</p>
       <button onclick="toggleScoreTable()">Ver pontuação</button>
 
       <div id="scoreTable">
         <h3>Tabela Oficial de Pontuação</h3>
         <table>
-          <tr><th>Posição dos Porcos</th><th>Pontuação</th></tr>
-          <tr><td>Pig Out (porcos se tocam)</td><td>0 (perde todos os pontos)</td></tr>
-          <tr><td>Sider (porcos em lados diferentes)</td><td>0</td></tr>
-          <tr><td>Razorback (porco de costas)</td><td>5</td></tr>
-          <tr><td>Trotter (porco em pé nas patas)</td><td>5</td></tr>
-          <tr><td>Snouter (porco apoiado no focinho e orelhas)</td><td>10</td></tr>
-          <tr><td>Leaning Jowler (porco inclinado na bochecha)</td><td>15</td></tr>
+          <tr><th>Posição</th><th>Pontos</th></tr>
+          <tr><td>Pig Out</td><td>0</td></tr>
+          <tr><td>Sider</td><td>0</td></tr>
+          <tr><td>Razorback</td><td>5</td></tr>
+          <tr><td>Trotter</td><td>5</td></tr>
+          <tr><td>Snouter</td><td>10</td></tr>
+          <tr><td>Leaning Jowler</td><td>15</td></tr>
           <tr><td>Double Razorback</td><td>20</td></tr>
           <tr><td>Double Trotter</td><td>20</td></tr>
           <tr><td>Double Snouter</td><td>40</td></tr>
           <tr><td>Double Leaning Jowler</td><td>60</td></tr>
-          <tr><td>Mixed Combo (combinações diferentes)</td><td>Soma das pontuações</td></tr>
         </table>
       </div>
     </div>
@@ -250,11 +254,13 @@
     }
 
     function renderPlayerList() {
-      document.getElementById("playerList").innerHTML = players.map((p, i) => `${i + 1}. ${p.name}`).join("<br>");
+      document.getElementById("playerList").innerHTML =
+        players.map((p, i) => `${i + 1}. ${p.name}`).join("<br>");
     }
 
     function startGame() {
-      if (players.length < 2) return Notiflix.Notify.failure("Adicione pelo menos 2 jogadores!");
+      if (players.length < 2)
+        return Notiflix.Notify.failure("Adicione pelo menos 2 jogadores!");
       gameActive = true;
       document.getElementById("setup").style.display = "none";
       document.getElementById("game").style.display = "block";
@@ -271,6 +277,7 @@
     function hold() {
       if (!gameActive) return;
       players[currentPlayer].total += roundScore;
+
       if (players[currentPlayer].total >= 100) {
         document.getElementById("winnerMsg").textContent =
           `${players[currentPlayer].name} venceu com ${players[currentPlayer].total} pontos!`;
@@ -351,15 +358,19 @@
     }
 
     function updateUI() {
-      document.getElementById("turnInfo").textContent = `Vez de: ${players[currentPlayer].name}`;
+      document.getElementById("turnInfo").textContent =
+        `Vez de: ${players[currentPlayer].name}`;
       document.getElementById("roundScore").textContent = roundScore;
+
       document.getElementById("scoreboard").innerHTML = players
         .map((p, i) => `
           <div class="player ${i === currentPlayer ? "active" : ""}">
             <span>${p.name}</span>
             <span>${p.total}</span>
           </div>
-        `).join("");
+        `)
+        .join("");
+
       saveGame();
     }
 
@@ -372,6 +383,43 @@
       const table = document.getElementById("scoreTable");
       table.style.display = table.style.display === "none" ? "block" : "none";
     }
+
+    /* ===========================================================
+       🚨 FUNÇÃO NOVA — WO (REMOVE JOGADOR DA RODADA)
+    ============================================================ */
+    function playerWO() {
+      const player = players[currentPlayer];
+
+      Notiflix.Confirm.show(
+        "WO - Remover Jogador",
+        `Confirmar WO para ${player.name}?`,
+        "Sim",
+        "Cancelar",
+        () => {
+          players.splice(currentPlayer, 1); // remove jogador
+
+          // se ficou só 1, este é o vencedor
+          if (players.length === 1) {
+            const winner = players[0];
+            document.getElementById("winnerMsg").textContent =
+              `${winner.name} venceu! Todos os outros saíram por WO.`;
+            gameActive = false;
+            updateUI();
+            return;
+          }
+
+          // ajustar índice do jogador atual
+          if (currentPlayer >= players.length) {
+            currentPlayer = 0;
+          }
+
+          roundScore = 0;
+          Notiflix.Notify.warning(`${player.name} foi removido por WO`);
+          updateUI();
+        }
+      );
+    }
+
   </script>
 </body>
 </html>
