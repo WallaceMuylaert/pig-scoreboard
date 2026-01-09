@@ -276,12 +276,45 @@ th {
 }
 
 @media (max-width: 480px) {
-  h1 { font-size: 1.8rem; }
-  .container { padding: 16px; }
-  button { padding: 10px 12px; font-size: 0.9rem; }
-  .points-grid { grid-template-columns: repeat(4, 1fr); }
-  .actions-grid { grid-template-columns: 1fr; }
-  .round-score { font-size: 2rem; }
+  h1 { font-size: 1.5rem; margin-top: 5px; }
+  .container { padding: 12px; }
+  button { padding: 8px 10px; font-size: 0.8rem; }
+  .points-grid { 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 5px;
+    margin: 10px 0;
+  }
+  .points-grid button { 
+    padding: 10px 6px; 
+    font-size: 0.9rem; 
+  }
+  .actions-grid { 
+    grid-template-columns: 1fr; 
+    gap: 5px;
+    margin: 8px 0;
+  }
+  .round-info {
+    padding: 10px;
+    margin: 10px 0;
+  }
+  .round-info h2 {
+    font-size: 1.1rem;
+  }
+  .round-score { font-size: 1.6rem; margin: 6px 0; }
+  .total-possivel { font-size: 0.9rem; }
+  .progress-container { height: 8px; margin: 6px 0; }
+  .player { padding: 8px 12px; margin: 5px 0; }
+  .player .points { font-size: 1.1rem; }
+  .player-list { margin: 10px 0; }
+  input { 
+    font-size: 0.9rem; 
+    padding: 10px 12px; 
+    width: 55%;
+  }
+  .setup-player { padding: 8px 10px; margin: 4px 0; }
+  .setup-player .player-actions button { padding: 5px 8px; font-size: 0.75rem; }
+  .winner { padding: 12px; font-size: 1rem; }
+  footer { font-size: 0.8rem; padding: 10px; }
 }
 
 /* Lista de jogadores no setup */
