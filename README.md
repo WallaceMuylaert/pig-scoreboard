@@ -1,2 +1,2 @@
 # pig-scoreboard
-pig-scoreboard
+pig-scoreboard.netlify.app
