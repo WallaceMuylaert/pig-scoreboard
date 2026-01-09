@@ -3,8 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐷</text></svg>">
   <title>Pig Head 🐷</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.6/dist/notiflix-aio-3.2.6.min.js"></script>
 
@@ -24,62 +29,187 @@
     }
     h1 {
       margin-top: 10px;
-      font-size: 2rem;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+      animation: bounceIn 0.6s ease;
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      70% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
     }
     .container {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 24px;
       width: 100%;
-      max-width: 420px;
+      max-width: 480px;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
     }
-    input, button {
+    input {
       font-size: 1rem;
-      border: none;
+      border: 2px solid rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.9);
+      color: #333;
       outline: none;
-      border-radius: 10px;
-      padding: 10px 15px;
+      border-radius: 12px;
+      padding: 12px 16px;
+      width: 60%;
+      transition: 0.3s;
+    }
+    input:focus {
+      border-color: #ff4fa3;
+      box-shadow: 0 0 10px rgba(255,79,163,0.5);
     }
     button {
-      background-color: #ff4fa3;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      outline: none;
+      border-radius: 12px;
+      padding: 12px 18px;
+      background: linear-gradient(135deg, #ff4fa3, #ff2c8b);
       color: white;
       margin: 5px;
-      transition: 0.2s;
+      transition: all 0.3s ease;
       cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255,79,163,0.4);
     }
     button:hover {
-      background-color: #ff2c8b;
-      transform: scale(1.05);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 20px rgba(255,79,163,0.5);
     }
+    button:active {
+      transform: scale(0.98);
+    }
+    
+    /* Botões de pontos */
+    .points-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 15px 0;
+    }
+    .points-grid button {
+      font-size: 1.1rem;
+      padding: 14px 8px;
+    }
+    
+    /* Botão desfazer */
+    .btn-undo {
+      background: linear-gradient(135deg, #ff9800, #f57c00) !important;
+      box-shadow: 0 4px 15px rgba(255,152,0,0.4) !important;
+    }
+    
+    /* Botões de ação secundária */
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin: 15px 0;
+    }
+    .btn-danger {
+      background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+      box-shadow: 0 4px 15px rgba(231,76,60,0.4) !important;
+    }
+    .btn-success {
+      background: linear-gradient(135deg, #27ae60, #1e8449) !important;
+      box-shadow: 0 4px 15px rgba(39,174,96,0.4) !important;
+    }
+    .btn-warning {
+      background: linear-gradient(135deg, #f39c12, #d68910) !important;
+      box-shadow: 0 4px 15px rgba(243,156,18,0.4) !important;
+    }
+    
+    /* Scoreboard melhorado */
     .player-list {
-      margin: 10px 0;
+      margin: 15px 0;
       text-align: left;
     }
     .player {
       display: flex;
       justify-content: space-between;
-      margin: 4px 0;
-      font-weight: bold;
+      align-items: center;
+      padding: 12px 16px;
+      margin: 8px 0;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
-    .active {
-      color: #fff;
-      text-shadow: 0 0 5px #fff;
+    .player.active {
+      background: rgba(255,255,255,0.35);
+      transform: scale(1.02);
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+      border-left: 4px solid #fff;
     }
+    .player .name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .player .points {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    
+    /* Barra de progresso */
+    .progress-container {
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      height: 12px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #fff, #ffe4ec);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+    
+    /* Info da rodada */
+    .round-info {
+      background: rgba(255,255,255,0.2);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 15px 0;
+    }
+    .round-info h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.4rem;
+    }
+    .round-score {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 10px 0;
+    }
+    .total-possivel {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
     .winner {
       font-size: 1.2rem;
       font-weight: bold;
       color: #fff;
-      background: rgba(255,255,255,0.2);
-      padding: 10px;
-      border-radius: 10px;
-      margin-top: 10px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+      padding: 16px;
+      border-radius: 16px;
+      margin-top: 15px;
+      animation: pulse 2s infinite;
     }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+      50% { box-shadow: 0 0 20px 10px rgba(255,255,255,0.2); }
+    }
+    
     footer {
       margin-top: auto;
-      padding: 10px;
+      padding: 15px;
       font-size: 0.9rem;
       opacity: 0.8;
       text-align: center;
@@ -130,26 +260,67 @@
     }
 
     @media (max-width: 480px) {
-      h1 { font-size: 1.5rem; }
-      .container { padding: 15px; }
-      button { padding: 8px 10px; font-size: 0.9rem; }
+      h1 { font-size: 1.8rem; }
+      .container { padding: 16px; }
+      button { padding: 10px 12px; font-size: 0.9rem; }
+      .points-grid { grid-template-columns: repeat(4, 1fr); }
+      .actions-grid { grid-template-columns: 1fr; }
+      .round-score { font-size: 2rem; }
+    }
+    
+    /* Lista de jogadores no setup */
+    .setup-player {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.2);
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin: 6px 0;
+    }
+    .setup-player .player-name {
+      font-weight: 600;
+    }
+    .setup-player .player-actions {
+      display: flex;
+      gap: 5px;
+    }
+    .setup-player .player-actions button {
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      margin: 0;
+    }
+    .btn-edit {
+      background: linear-gradient(135deg, #3498db, #2980b9) !important;
+      box-shadow: 0 3px 10px rgba(52,152,219,0.4) !important;
+    }
+    .btn-remove {
+      background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+      box-shadow: 0 3px 10px rgba(231,76,60,0.4) !important;
     }
   </style>
 </head>
 <body>
-  <h1>Pig Head 🐷</h1>
+  <h1>🐷 Pig Head</h1>
   <div class="container">
     <div id="setup">
-      <input type="text" id="playerName" placeholder="Nome do jogador" />
-      <button onclick="addPlayer()">Adicionar</button>
+      <input type="text" id="playerName" placeholder="Nome do jogador" onkeypress="if(event.key==='Enter')addPlayer()" />
+      <button onclick="addPlayer()">➕ Adicionar</button>
       <div class="player-list" id="playerList"></div>
-      <button onclick="startGame()" id="startBtn">Iniciar Jogo</button>
+      <button onclick="startGame()" id="startBtn" class="btn-success">🎮 Iniciar Jogo</button>
     </div>
 
     <div id="game" style="display:none;">
-      <h2 id="turnInfo"></h2>
-      <p>Pontos da rodada: <span id="roundScore">0</span></p>
-      <div>
+      <div class="round-info">
+        <h2 id="turnInfo"></h2>
+        <div class="progress-container">
+          <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+        </div>
+        <div class="round-score">🎯 <span id="roundScore">0</span></div>
+        <div class="total-possivel">Total: <span id="totalPossivel">0</span> / 100</div>
+      </div>
+      
+      <div class="points-grid">
         <button onclick="addPoints(1)">+1</button>
         <button onclick="addPoints(5)">+5</button>
         <button onclick="addPoints(10)">+10</button>
@@ -157,25 +328,26 @@
         <button onclick="addPoints(20)">+20</button>
         <button onclick="addPoints(40)">+40</button>
         <button onclick="addPoints(60)">+60</button>
+        <button onclick="undoLastAction()" class="btn-undo">↩️</button>
       </div>
 
-      <!-- BOTÃO NOVO DE WO -->
-      <div>
-        <button onclick="playerWO()">Remover da partida</button>
+      <div class="actions-grid">
+        <button onclick="hold()" class="btn-success">✅ Parar</button>
+        <button onclick="resetRound()" class="btn-warning">🔄 Zerar rodada</button>
+        <button onclick="resetPlayerPoints()" class="btn-danger">❌ Zerar jogador</button>
+        <button onclick="playerWO()" class="btn-danger">🚫 Remover</button>
       </div>
-
-      <div>
-        <button onclick="hold()">Parar</button>
-        <button onclick="resetRound()">Zerar rodada</button>
-        <button onclick="resetPlayerPoints()">Zerar jogador</button>
-        <button onclick="resetGame()">Zerar tudo</button>
-        <button onclick="restartGame()">Reiniciar jogo</button>
+      
+      <div class="actions-grid">
+        <button onclick="resetGame()">🔁 Zerar tudo</button>
+        <button onclick="restartGame()">🆕 Novo jogo</button>
       </div>
+      
       <div class="player-list" id="scoreboard"></div>
       <div class="winner" id="winnerMsg"></div>
     </div>
 
-    <button onclick="toggleInstructions()">📘 Ver regras</button>
+    <button onclick="toggleInstructions()" style="margin-top: 15px;">📘 Ver regras</button>
     <div id="instructions">
       <h3>Regras Oficiais do Jogo Pig</h3>
       <p><strong>Objetivo:</strong> Ser o primeiro jogador a alcançar <b>100 pontos</b>.</p>
@@ -224,6 +396,7 @@
     let currentPlayer = 0;
     let roundScore = 0;
     let gameActive = false;
+    let stateHistory = []; // Pilha de estados para desfazer múltiplas vezes
 
     window.onload = () => {
       const saved = localStorage.getItem("pighead_game");
@@ -254,8 +427,47 @@
     }
 
     function renderPlayerList() {
-      document.getElementById("playerList").innerHTML =
-        players.map((p, i) => `${i + 1}. ${p.name}`).join("<br>");
+      document.getElementById("playerList").innerHTML = players
+        .map((p, i) => `
+          <div class="setup-player">
+            <span class="player-name">${i + 1}. ${p.name}</span>
+            <div class="player-actions">
+              <button class="btn-edit" onclick="editPlayer(${i})">✏️</button>
+              <button class="btn-remove" onclick="removePlayer(${i})">✕</button>
+            </div>
+          </div>
+        `)
+        .join("");
+    }
+    
+    function editPlayer(index) {
+      Notiflix.Confirm.prompt(
+        "✏️ Editar Jogador",
+        "Digite o novo nome:",
+        players[index].name,
+        "Salvar",
+        "Cancelar",
+        (newName) => {
+          if (newName && newName.trim()) {
+            players[index].name = newName.trim();
+            renderPlayerList();
+            Notiflix.Notify.success("Nome atualizado!");
+          }
+        },
+        () => {},
+        {
+          okButtonBackground: '#ff4fa3',
+          cancelButtonBackground: '#ffb6c1',
+          titleColor: '#ff4fa3',
+          backgroundColor: '#fff4fa'
+        }
+      );
+    }
+    
+    function removePlayer(index) {
+      const removed = players.splice(index, 1)[0];
+      renderPlayerList();
+      Notiflix.Notify.warning(`${removed.name} removido!`);
     }
 
     function startGame() {
@@ -270,7 +482,61 @@
 
     function addPoints(points) {
       if (!gameActive) return;
+      
+      // Salvar estado antes de modificar (empilha no histórico)
+      stateHistory.push({
+        players: JSON.parse(JSON.stringify(players)),
+        currentPlayer: currentPlayer,
+        roundScore: roundScore,
+        gameActive: gameActive,
+        winnerMsg: document.getElementById("winnerMsg").innerHTML
+      });
+      
       roundScore += points;
+
+      // Verificar se acumulado + rodada >= 100 => vencedor imediato
+      const totalPossivel = players[currentPlayer].total + roundScore;
+      if (totalPossivel >= 100) {
+        players[currentPlayer].total = totalPossivel;
+        document.getElementById("winnerMsg").innerHTML =
+          `🎉 <strong>${players[currentPlayer].name}</strong> venceu!<br>` +
+          `Acumulado: ${players[currentPlayer].total - roundScore} + Rodada: ${roundScore} = <strong>${totalPossivel} pontos!</strong>`;
+        gameActive = false;
+        stateHistory = []; // Limpar histórico de undo
+        
+        Notiflix.Confirm.show(
+          "🎉 Fim de jogo!",
+          `${players[currentPlayer].name} venceu com ${totalPossivel} pontos!`,
+          "Novo Jogo",
+          "Nova Rodada",
+          // Botão 1: Novo Jogo (volta à tela de setup)
+          () => {
+            players = [];
+            currentPlayer = 0;
+            roundScore = 0;
+            gameActive = false;
+            stateHistory = [];
+            document.getElementById("game").style.display = "none";
+            document.getElementById("setup").style.display = "block";
+            document.getElementById("playerList").innerHTML = "";
+            document.getElementById("winnerMsg").textContent = "";
+            localStorage.removeItem("pighead_game");
+            Notiflix.Notify.success("Adicione os jogadores para um novo jogo!");
+          },
+          // Botão 2: Nova Rodada (mantém jogadores, zera pontos)
+          () => {
+            players.forEach(p => p.total = 0);
+            roundScore = 0;
+            currentPlayer = 0;
+            gameActive = true;
+            stateHistory = [];
+            document.getElementById("winnerMsg").textContent = "";
+            Notiflix.Notify.success("Nova rodada com os mesmos jogadores!");
+            updateUI();
+          }
+        );
+      }
+
       updateUI();
     }
 
@@ -358,15 +624,26 @@
     }
 
     function updateUI() {
+      // Verificação de segurança
+      if (!players.length || !players[currentPlayer]) return;
+      
       document.getElementById("turnInfo").textContent =
-        `Vez de: ${players[currentPlayer].name}`;
+        `🎲 Vez de: ${players[currentPlayer].name}`;
       document.getElementById("roundScore").textContent = roundScore;
+      
+      // Mostrar total possível (acumulado + rodada)
+      const totalAtual = players[currentPlayer].total + roundScore;
+      document.getElementById("totalPossivel").textContent = totalAtual;
+      
+      // Atualizar barra de progresso
+      const progressPercent = Math.min(totalAtual, 100);
+      document.getElementById("progressBar").style.width = `${progressPercent}%`;
 
       document.getElementById("scoreboard").innerHTML = players
         .map((p, i) => `
           <div class="player ${i === currentPlayer ? "active" : ""}">
-            <span>${p.name}</span>
-            <span>${p.total}</span>
+            <span class="name">${i === currentPlayer ? "👉" : ""} ${p.name}</span>
+            <span class="points">${p.total}</span>
           </div>
         `)
         .join("");
@@ -401,10 +678,45 @@
           // se ficou só 1, este é o vencedor
           if (players.length === 1) {
             const winner = players[0];
-            document.getElementById("winnerMsg").textContent =
-              `${winner.name} venceu! Todos os outros saíram por WO.`;
+            document.getElementById("winnerMsg").innerHTML =
+              `🏆 <strong>${winner.name}</strong> venceu!<br>Todos os outros saíram por WO.`;
             gameActive = false;
-            updateUI();
+            stateHistory = [];
+            
+            // Delay para garantir que o popup anterior feche antes de abrir o novo
+            setTimeout(() => {
+              Notiflix.Confirm.show(
+                "🏆 Temos um vencedor!",
+                `${winner.name} venceu! Todos os outros saíram por WO.`,
+                "Novo Jogo",
+                "Nova Rodada",
+                // Botão 1: Novo Jogo (volta à tela de setup)
+                () => {
+                  players = [];
+                  currentPlayer = 0;
+                  roundScore = 0;
+                  gameActive = false;
+                  stateHistory = [];
+                  document.getElementById("game").style.display = "none";
+                  document.getElementById("setup").style.display = "block";
+                  document.getElementById("playerList").innerHTML = "";
+                  document.getElementById("winnerMsg").textContent = "";
+                  localStorage.removeItem("pighead_game");
+                  Notiflix.Notify.success("Adicione os jogadores para um novo jogo!");
+                },
+                // Botão 2: Nova Rodada (mantém jogadores, zera pontos)
+                () => {
+                  players.forEach(p => p.total = 0);
+                  roundScore = 0;
+                  currentPlayer = 0;
+                  gameActive = true;
+                  stateHistory = [];
+                  document.getElementById("winnerMsg").textContent = "";
+                  Notiflix.Notify.success("Nova rodada com os mesmos jogadores!");
+                  updateUI();
+                }
+              );
+            }, 300);
             return;
           }
 
@@ -418,6 +730,23 @@
           updateUI();
         }
       );
+    }
+
+    function undoLastAction() {
+      if (stateHistory.length === 0) {
+        Notiflix.Notify.warning("Nada para desfazer!");
+        return;
+      }
+
+      const lastState = stateHistory.pop(); // Pega o último estado da pilha
+      players = lastState.players;
+      currentPlayer = lastState.currentPlayer;
+      roundScore = lastState.roundScore;
+      gameActive = lastState.gameActive;
+      document.getElementById("winnerMsg").innerHTML = lastState.winnerMsg;
+
+      Notiflix.Notify.info(`Desfeito! (${stateHistory.length} ações restantes)`);
+      updateUI();
     }
 
   </script>
