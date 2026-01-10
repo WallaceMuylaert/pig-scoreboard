@@ -5,8 +5,37 @@
  */
 export class NotificationService {
     constructor() {
-        // Inicializa o Notiflix com as cores do projeto
         if (typeof Notiflix !== 'undefined') {
+
+            // Configuração das NOTIFICAÇÕES (toast)
+            Notiflix.Notify.init({
+                position: 'right-bottom',   // Canto inferior direito
+                closeButton: true,          // Botão de fechar
+                clickToClose: true,         // Fecha ao clicar
+                timeout: 4000,              // Tempo automático
+                width: '300px',
+                fontSize: '14px',
+                borderRadius: '8px',
+
+                success: {
+                    background: '#ff4fa3',
+                    textColor: '#fff'
+                },
+                failure: {
+                    background: '#ff6b6b',
+                    textColor: '#fff'
+                },
+                warning: {
+                    background: '#ffa502',
+                    textColor: '#fff'
+                },
+                info: {
+                    background: '#70a1ff',
+                    textColor: '#fff'
+                }
+            });
+
+            // Configuração dos MODAIS de confirmação
             Notiflix.Confirm.init({
                 okButtonBackground: '#ff4fa3',
                 okButtonColor: '#fff',
@@ -52,28 +81,15 @@ export class NotificationService {
 
     /**
      * Exibe modal de confirmação
-     * @param {string} title
-     * @param {string} message
-     * @param {string} okText
-     * @param {string} cancelText
-     * @param {Function} onOk
-     * @param {Function} onCancel
      */
-    confirm(title, message, okText, cancelText, onOk, onCancel = () => { }) {
+    confirm(title, message, okText, cancelText, onOk, onCancel = () => {}) {
         Notiflix.Confirm.show(title, message, okText, cancelText, onOk, onCancel);
     }
 
     /**
-     * Exibe modal de confirmação com input
-     * @param {string} title
-     * @param {string} message
-     * @param {string} defaultValue
-     * @param {string} okText
-     * @param {string} cancelText
-     * @param {Function} onOk
-     * @param {Function} onCancel
+     * Exibe modal com input
      */
-    prompt(title, message, defaultValue, okText, cancelText, onOk, onCancel = () => { }) {
+    prompt(title, message, defaultValue, okText, cancelText, onOk, onCancel = () => {}) {
         Notiflix.Confirm.prompt(
             title, message, defaultValue, okText, cancelText,
             onOk, onCancel,
@@ -88,9 +104,6 @@ export class NotificationService {
 
     /**
      * Exibe relatório de sucesso
-     * @param {string} title
-     * @param {string} message
-     * @param {string} buttonText
      */
     report(title, message, buttonText = 'Ok') {
         Notiflix.Report.success(title, message, buttonText);
