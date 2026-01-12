@@ -2,7 +2,9 @@
    Pig Head Scoreboard - Estilos
    ============================================ */
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -20,14 +22,24 @@ body {
 h1 {
   margin-top: 10px;
   font-size: 2.5rem;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   animation: bounceIn 0.6s ease;
 }
 
 @keyframes bounceIn {
-  0% { transform: scale(0.5); opacity: 0; }
-  70% { transform: scale(1.1); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .container {
@@ -38,14 +50,14 @@ h1 {
   width: 100%;
   max-width: 480px;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 input {
   font-size: 1rem;
-  border: 2px solid rgba(255,255,255,0.5);
-  background: rgba(255,255,255,0.9);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.9);
   color: #333;
   outline: none;
   border-radius: 12px;
@@ -56,7 +68,7 @@ input {
 
 input:focus {
   border-color: #ff4fa3;
-  box-shadow: 0 0 10px rgba(255,79,163,0.5);
+  box-shadow: 0 0 10px rgba(255, 79, 163, 0.5);
 }
 
 button {
@@ -71,12 +83,12 @@ button {
   margin: 5px;
   transition: all 0.3s ease;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(255,79,163,0.4);
+  box-shadow: 0 4px 15px rgba(255, 79, 163, 0.4);
 }
 
 button:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(255,79,163,0.5);
+  box-shadow: 0 6px 20px rgba(255, 79, 163, 0.5);
 }
 
 button:active {
@@ -99,7 +111,7 @@ button:active {
 /* Botão desfazer */
 .btn-undo {
   background: linear-gradient(135deg, #ff9800, #f57c00) !important;
-  box-shadow: 0 4px 15px rgba(255,152,0,0.4) !important;
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4) !important;
 }
 
 /* Botões de ação secundária */
@@ -112,17 +124,17 @@ button:active {
 
 .btn-danger {
   background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
-  box-shadow: 0 4px 15px rgba(231,76,60,0.4) !important;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4) !important;
 }
 
 .btn-success {
   background: linear-gradient(135deg, #27ae60, #1e8449) !important;
-  box-shadow: 0 4px 15px rgba(39,174,96,0.4) !important;
+  box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4) !important;
 }
 
 .btn-warning {
   background: linear-gradient(135deg, #f39c12, #d68910) !important;
-  box-shadow: 0 4px 15px rgba(243,156,18,0.4) !important;
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4) !important;
 }
 
 /* Scoreboard melhorado */
@@ -137,16 +149,16 @@ button:active {
   align-items: center;
   padding: 12px 16px;
   margin: 8px 0;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .player.active {
-  background: rgba(255,255,255,0.35);
+  background: rgba(255, 255, 255, 0.35);
   transform: scale(1.02);
-  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
   border-left: 4px solid #fff;
 }
 
@@ -163,7 +175,7 @@ button:active {
 
 /* Barra de progresso */
 .progress-container {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   height: 12px;
   margin: 10px 0;
@@ -179,7 +191,7 @@ button:active {
 
 /* Info da rodada */
 .round-info {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
   padding: 16px;
   margin: 15px 0;
@@ -205,7 +217,7 @@ button:active {
   font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
-  background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
   padding: 16px;
   border-radius: 16px;
   margin-top: 15px;
@@ -213,8 +225,15 @@ button:active {
 }
 
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
-  50% { box-shadow: 0 0 20px 10px rgba(255,255,255,0.2); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.2);
+  }
 }
 
 footer {
@@ -235,9 +254,9 @@ footer a:hover {
   text-decoration: underline;
 }
 
-#instructions, #scoreTable {
+#instructions {
   display: none;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
   padding: 15px;
   margin-top: 15px;
@@ -247,14 +266,29 @@ footer a:hover {
   animation: fadeIn 0.4s ease;
 }
 
-#instructions h3, #scoreTable h3 {
+.score-table {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+#instructions h3,
+.score-table h3 {
   text-align: center;
   margin-bottom: 10px;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 table {
@@ -265,56 +299,110 @@ table {
   font-size: 0.9rem;
 }
 
-th, td {
+th,
+td {
   padding: 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   text-align: left;
 }
 
 th {
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 @media (max-width: 480px) {
-  h1 { font-size: 1.5rem; margin-top: 5px; }
-  .container { padding: 12px; }
-  button { padding: 8px 10px; font-size: 0.8rem; }
-  .points-grid { 
-    grid-template-columns: repeat(4, 1fr); 
+  h1 {
+    font-size: 1.5rem;
+    margin-top: 5px;
+  }
+
+  .container {
+    padding: 12px;
+  }
+
+  button {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .points-grid {
+    grid-template-columns: repeat(4, 1fr);
     gap: 5px;
     margin: 10px 0;
   }
-  .points-grid button { 
-    padding: 10px 6px; 
-    font-size: 0.9rem; 
+
+  .points-grid button {
+    padding: 10px 6px;
+    font-size: 0.9rem;
   }
-  .actions-grid { 
-    grid-template-columns: 1fr; 
+
+  .actions-grid {
+    grid-template-columns: 1fr;
     gap: 5px;
     margin: 8px 0;
   }
+
   .round-info {
     padding: 10px;
     margin: 10px 0;
   }
+
   .round-info h2 {
     font-size: 1.1rem;
   }
-  .round-score { font-size: 1.6rem; margin: 6px 0; }
-  .total-possivel { font-size: 0.9rem; }
-  .progress-container { height: 8px; margin: 6px 0; }
-  .player { padding: 8px 12px; margin: 5px 0; }
-  .player .points { font-size: 1.1rem; }
-  .player-list { margin: 10px 0; }
-  input { 
-    font-size: 0.9rem; 
-    padding: 10px 12px; 
+
+  .round-score {
+    font-size: 1.6rem;
+    margin: 6px 0;
+  }
+
+  .total-possivel {
+    font-size: 0.9rem;
+  }
+
+  .progress-container {
+    height: 8px;
+    margin: 6px 0;
+  }
+
+  .player {
+    padding: 8px 12px;
+    margin: 5px 0;
+  }
+
+  .player .points {
+    font-size: 1.1rem;
+  }
+
+  .player-list {
+    margin: 10px 0;
+  }
+
+  input {
+    font-size: 0.9rem;
+    padding: 10px 12px;
     width: 55%;
   }
-  .setup-player { padding: 8px 10px; margin: 4px 0; }
-  .setup-player .player-actions button { padding: 5px 8px; font-size: 0.75rem; }
-  .winner { padding: 12px; font-size: 1rem; }
-  footer { font-size: 0.8rem; padding: 10px; }
+
+  .setup-player {
+    padding: 8px 10px;
+    margin: 4px 0;
+  }
+
+  .setup-player .player-actions button {
+    padding: 5px 8px;
+    font-size: 0.75rem;
+  }
+
+  .winner {
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  footer {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
 }
 
 /* Lista de jogadores no setup */
@@ -322,7 +410,7 @@ th {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   padding: 10px 14px;
   border-radius: 10px;
   margin: 6px 0;
@@ -345,10 +433,10 @@ th {
 
 .btn-edit {
   background: linear-gradient(135deg, #3498db, #2980b9) !important;
-  box-shadow: 0 3px 10px rgba(52,152,219,0.4) !important;
+  box-shadow: 0 3px 10px rgba(52, 152, 219, 0.4) !important;
 }
 
 .btn-remove {
   background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
-  box-shadow: 0 3px 10px rgba(231,76,60,0.4) !important;
+  box-shadow: 0 3px 10px rgba(231, 76, 60, 0.4) !important;
 }

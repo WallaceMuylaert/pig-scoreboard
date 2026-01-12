@@ -16,8 +16,7 @@ export class UIRenderer {
             progressBar: document.getElementById('progressBar'),
             scoreboard: document.getElementById('scoreboard'),
             winnerMsg: document.getElementById('winnerMsg'),
-            instructions: document.getElementById('instructions'),
-            scoreTable: document.getElementById('scoreTable')
+            instructions: document.getElementById('instructions')
         };
     }
 
@@ -138,14 +137,6 @@ export class UIRenderer {
      */
     toggleInstructions() {
         const el = this.elements.instructions;
-        el.style.display = el.style.display === 'none' ? 'block' : 'none';
-    }
-
-    /**
-     * Toggle da tabela de pontuação
-     */
-    toggleScoreTable() {
-        const el = this.elements.scoreTable;
         el.style.display = el.style.display === 'none' ? 'block' : 'none';
     }
 

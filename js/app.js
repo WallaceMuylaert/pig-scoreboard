@@ -30,7 +30,6 @@ window.restartGame = () => gameController.restartGame();
 window.playerWO = () => gameController.playerWO();
 window.undoLastAction = () => gameController.undo();
 window.toggleInstructions = () => ui.toggleInstructions();
-window.toggleScoreTable = () => ui.toggleScoreTable();
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
