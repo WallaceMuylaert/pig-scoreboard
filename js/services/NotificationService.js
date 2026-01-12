@@ -10,9 +10,10 @@ export class NotificationService {
             // Configuração das NOTIFICAÇÕES (toast)
             Notiflix.Notify.init({
                 position: 'right-bottom',   // Canto inferior direito
-                closeButton: true,          // Botão de fechar
+                closeButton: false,         // Botão de fechar
                 clickToClose: true,         // Fecha ao clicar
-                timeout: 4000,              // Tempo automático
+                pauseOnHover: false,        // Não pausar com mouse em cima
+                timeout: 2500,              // Tempo automático
                 width: '300px',
                 fontSize: '14px',
                 borderRadius: '8px',
