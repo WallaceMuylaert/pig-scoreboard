@@ -43,18 +43,23 @@ Um placar digital bonito e intuitivo para o jogo **Pig** (Pass the Pigs), desenv
 
 ## 📋 Tabela de Pontuação (Pass the Pigs)
 
-| Posição | Pontos |
-|---------|--------|
-| Pig Out | 0 |
-| Sider | 0 |
-| Razorback | 5 |
-| Trotter | 5 |
-| Snouter | 10 |
-| Leaning Jowler | 15 |
-| Double Razorback | 20 |
-| Double Trotter | 20 |
-| Double Snouter | 40 |
-| Double Leaning Jowler | 60 |
+![Tabela de Pontuação](img/scoring_positions.png)
+
+| Posição | Pontos | Descrição |
+|---------|--------|-----------|
+| **Sider** | 1 | Os dois porcos caem do mesmo lado (ambos com ponto ou sem ponto para cima) |
+| **Trotter** | 5 | O porco cai em pé (nas quatro patas) |
+| **Razorback** | 5 | O porco cai de costas |
+| **Snouter** | 10 | O porco cai apoiado no nariz |
+| **Leaning Jowler** | 15 | O porco cai apoiado na orelha/bochecha |
+| **Pig Out** | 0 | Um porco vira para um lado e o outro para o outro (Perde pontos da rodada) |
+| **Double Trotter** | 20 | Dois Trotters |
+| **Double Razorback** | 20 | Dois Razorbacks |
+| **Double Snouter** | 40 | Dois Snouters |
+| **Double Leaning Jowler** | 60 | Dois Leaning Jowlers |
+| **Mixed Combo** | Soma | Soma das posições individuais (ex: Trotter + Snouter = 15) |
+| **Makin' Bacon** | ZERA TUDO | Os porcos se tocam (Perde TODOS os pontos do jogo) |
+| **Piggy Back** | Impossível | Um porco em cima do outro |
 
 ---
 
