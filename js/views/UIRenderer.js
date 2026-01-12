@@ -137,7 +137,7 @@ export class UIRenderer {
      */
     toggleInstructions() {
         const el = this.elements.instructions;
-        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        el.style.display = el.style.display === 'block' ? 'none' : 'block';
     }
 
     /**
